@@ -1,6 +1,4 @@
 package stepDefinitions.api;
-
-
 import hooks.api.HooksAPI;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -8,16 +6,13 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.json.JSONObject;
 import utilities.ConfigReader;
-
 import java.util.Arrays;
-
 import static hooks.api.HooksAPI.spec;
 import static io.restassured.RestAssured.given;
-
 public class CommonAPI {
 
-    String fullPath;
 
+    String fullPath;
     JSONObject reqBody;
 
     @Given("Api kullanicisi {string} path parametreleri set eder.")
@@ -48,22 +43,22 @@ public class CommonAPI {
 
             tempPath.append(key + "}/{");
         }
-            tempPath.deleteCharAt(tempPath.lastIndexOf("{"));
-            tempPath.deleteCharAt(tempPath.lastIndexOf("/"));
+        tempPath.deleteCharAt(tempPath.lastIndexOf("{"));
+        tempPath.deleteCharAt(tempPath.lastIndexOf("/"));
 
-            fullPath = tempPath.toString();
+        fullPath = tempPath.toString();
         System.out.println("fullPath = " + fullPath);
     }
     @Then("AllCountries icin Get request gonderilir.")
     public void all_countries_icin_get_request_gonderilir() {
 
         Response response = given()
-                                .spec(spec)
-                                .contentType(ContentType.JSON)
-                                .header("Accept","application/json")
-                                .headers("Authorization","Bearer " + HooksAPI.token)
-                            .when()
-                                .get(fullPath);
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept","application/json")
+                .headers("Authorization","Bearer " + HooksAPI.token)
+                .when()
+                .get(fullPath);
 
         response.prettyPrint();
 
@@ -91,15 +86,13 @@ public class CommonAPI {
     public void loginIcinPostRequestGonderilir() {
 
         Response response = given()
-                                .spec(spec)
-                                .contentType(ContentType.JSON)
-                                .header("Accept","application/json")
-                            .when()
-                                .body(reqBody.toString())
-                                .post(fullPath);
+                .spec(spec)
+                .contentType(ContentType.JSON)
+                .header("Accept","application/json")
+                .when()
+                .body(reqBody.toString())
+                .post(fullPath);
 
         response.prettyPrint();
-
-
     }
 }
